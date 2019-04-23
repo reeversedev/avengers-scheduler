@@ -20,7 +20,7 @@ function sendBangaloreMail() {
 
   const mailOptions = {
     from: process.env.EMAIL,
-    to: 'prateek@whitepanda.in',
+    to: 'prateek@whitepanda.in, sanishkr@gmail.com',
     subject: 'Avengers is here.',
     html:
       '<p>Hey! This is a reminder that new theatre has started screening Avengers: End Game</p>'
