@@ -46,7 +46,7 @@ async function doBangaloreStuff() {
       (error, response, html) => {
         if (!error & (response.statusCode == 200)) {
           var $ = cheerio.load(html);
-          if ($('#venuelist').length > 0) {
+          if ($('#venuelist').length > 1) {
             return sendBangaloreMail();
           }
         }
