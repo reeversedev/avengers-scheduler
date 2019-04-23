@@ -11,8 +11,8 @@ function sendBangaloreMail() {
   var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'reeversedev@gmail.com',
-      pass: '9560@shutup'
+      user: process.env.EMAIL,
+      pass: process.env.PASSWORD
     }
   });
 
@@ -59,8 +59,8 @@ function sendHyderabadMail() {
   var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'reeversedev@gmail.com',
-      pass: '9560@shutup'
+      user: process.env.EMAIL,
+      pass: process.env.PASSWORD
     }
   });
 
