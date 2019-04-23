@@ -3,6 +3,8 @@ var request = require('request');
 var cheerio = require('cheerio');
 var nodemailer = require('nodemailer');
 
+require('dotenv').config();
+
 let app = express();
 
 let timer = 3000;
@@ -17,8 +19,8 @@ function sendBangaloreMail() {
   });
 
   const mailOptions = {
-    from: 'reeversedev@gmail.com',
-    to: 'gogia.prateek@hotmail.com, sanishkr@gmail.com',
+    from: process.env.EMAIL,
+    to: 'prateek@whitepanda.in',
     subject: 'Avengers is here.',
     html:
       '<p>Hey! This is a reminder that new theatre has started screening Avengers: End Game</p>'
@@ -44,7 +46,7 @@ async function doBangaloreStuff() {
       (error, response, html) => {
         if (!error & (response.statusCode == 200)) {
           var $ = cheerio.load(html);
-          if ($('#venuelist').length > 1) {
+          if ($('#venuelist').length > 0) {
             return sendBangaloreMail();
           }
         }
