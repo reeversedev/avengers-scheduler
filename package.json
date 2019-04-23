@@ -1,0 +1,33 @@
+{
+  "name": "avengers-scheduler",
+  "version": "1.0.0",
+  "description": "An application to give you reminders when there is an opening or a new show in a theatre.",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reeversedev/avengers-scheduler.git"
+  },
+  "keywords": [
+    "Node.js",
+    "Express.js",
+    "Nodemailer"
+  ],
+  "author": "reeversedev",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/reeversedev/avengers-scheduler/issues"
+  },
+  "homepage": "https://github.com/reeversedev/avengers-scheduler#readme",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "express": "^4.16.4",
+    "nodemailer": "^6.1.1",
+    "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.11"
+  }
+}
