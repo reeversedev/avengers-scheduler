@@ -9,6 +9,9 @@ let app = express();
 
 let timer = 3000;
 
+let bangalore = 3;
+let hyderabad = 3;
+
 function sendBangaloreMail() {
   var transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -46,7 +49,8 @@ async function doBangaloreStuff() {
       (error, response, html) => {
         if (!error & (response.statusCode == 200)) {
           var $ = cheerio.load(html);
-          if ($('#venuelist').children('.list').length > 2) {
+          if ($('#venuelist').children('.list').length > bangalore) {
+            bangalore++;
             return sendBangaloreMail();
           }
         }
@@ -93,7 +97,8 @@ async function doHyderabadStuff() {
       (error, response, html) => {
         if (!error & (response.statusCode == 200)) {
           var $ = cheerio.load(html);
-          if ($('#venuelist').children('.list').length > 2) {
+          if ($('#venuelist').children('.list').length > hyderabad) {
+            hyderabad++;
             return sendHyderabadMail();
           }
         }
