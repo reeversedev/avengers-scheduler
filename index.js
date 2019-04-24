@@ -46,13 +46,13 @@ async function doBangaloreStuff() {
       (error, response, html) => {
         if (!error & (response.statusCode == 200)) {
           var $ = cheerio.load(html);
-          if ($('#venuelist').length > 1) {
+          if ($('#venuelist').children('.list').length > 2) {
             return sendBangaloreMail();
           }
         }
       }
     );
-  }, 300000);
+  }, 15000);
 
   return true;
 }
@@ -86,7 +86,6 @@ function sendHyderabadMail() {
 async function doHyderabadStuff() {
   console.log('Doing Hyderabad...');
   clearInterval(timer);
-
   setInterval(async () => {
     console.log('Making the request');
     await request(
@@ -94,13 +93,13 @@ async function doHyderabadStuff() {
       (error, response, html) => {
         if (!error & (response.statusCode == 200)) {
           var $ = cheerio.load(html);
-          if ($('#venuelist').length > 1) {
+          if ($('#venuelist').children('.list').length > 2) {
             return sendHyderabadMail();
           }
         }
       }
     );
-  }, 300000);
+  }, 15000);
 
   return true;
 }
