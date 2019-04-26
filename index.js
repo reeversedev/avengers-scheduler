@@ -1,41 +1,50 @@
-var express = require('express');
 var request = require('request');
 var cheerio = require('cheerio');
 var nodemailer = require('nodemailer');
+var fs = require('fs');
+var http = require('http');
 
 require('dotenv').config();
 
-let app = express();
+// Setting Timer for 5 minutes
 
-let timer = 3000;
+let timer = 1000;
+
+// Setting Initial Values of theatres that I already Know for locations (Since this is only for small purpose. Don't expect too much for me. Okay?)
 
 let bangalore = 3;
 let hyderabad = 3;
 
+// Handle Bangalore Requests
+
 function sendBangaloreMail() {
-  var transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.EMAIL,
-      pass: process.env.PASSWORD
-    }
-  });
+  if (process.env.BANGALORE_RECIPIENTS) {
+    var transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD
+      }
+    });
 
-  const mailOptions = {
-    from: process.env.EMAIL,
-    to: 'prateek@whitepanda.in, sanishkr@gmail.com',
-    subject: 'Avengers is here.',
-    html:
-      '<p>Hey! This is a reminder that new theatre has started screening Avengers: End Game</p>'
-  };
+    const mailOptions = {
+      from: process.env.EMAIL,
+      to: process.env.BANGALORE_RECIPIENTS,
+      subject: 'Avengers is here.',
+      html:
+        '<p>Hey! This is a reminder that new theatre has started screening Avengers: End Game</p>'
+    };
 
-  return transporter.sendMail(mailOptions, (err, info) => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log(info);
-    }
-  });
+    return transporter.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(info);
+      }
+    });
+  } else {
+    return;
+  }
 }
 
 async function doBangaloreStuff() {
@@ -56,35 +65,41 @@ async function doBangaloreStuff() {
         }
       }
     );
-  }, 15000);
+  }, timer);
 
   return true;
 }
 
+// Handle Hyderabad Requests
+
 function sendHyderabadMail() {
-  var transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.EMAIL,
-      pass: process.env.PASSWORD
-    }
-  });
+  if (process.env.HYDERABAD_RECIPIENTS) {
+    var transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD
+      }
+    });
 
-  const mailOptions = {
-    from: 'reeversedev@gmail.com',
-    to: 'sunandansharma2012@gmail.com',
-    subject: 'Avengers is here.',
-    html:
-      '<p>Hey! This is a reminder that new theatre has started screening <a href="https://in.bookmyshow.com/buytickets/pvr-forum-sujana-mall-kukatpally-hyderabad/cinema-hyd-PVSF-MT/20190426">Avengers: End Game</a></p>'
-  };
+    const mailOptions = {
+      from: 'reeversedev@gmail.com',
+      to: process.env.HYDERABAD_RECIPIENTS,
+      subject: 'Avengers is here.',
+      html:
+        '<p>Hey! This is a reminder that new theatre has started screening <a href="https://in.bookmyshow.com/buytickets/pvr-forum-sujana-mall-kukatpally-hyderabad/cinema-hyd-PVSF-MT/20190426">Avengers: End Game</a></p>'
+    };
 
-  return transporter.sendMail(mailOptions, (err, info) => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log(info);
-    }
-  });
+    return transporter.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(info);
+      }
+    });
+  } else {
+    return;
+  }
 }
 
 async function doHyderabadStuff() {
@@ -104,13 +119,13 @@ async function doHyderabadStuff() {
         }
       }
     );
-  }, 15000);
+  }, timer);
 
   return true;
 }
 
-app.listen('3000', () => {
-  console.log('Server is running');
+http.createServer().listen(3000, () => {
+  console.log('Server at PORT 3000 started.');
   doBangaloreStuff();
   doHyderabadStuff();
 });
