@@ -17,7 +17,7 @@ let timer = 1000;
 let bangalore = 3;
 let hyderabad = 3;
 let mumbai = 3;
-let count = 0;
+let count = 1;
 
 // Handle Bangalore Requests
 
@@ -129,6 +129,18 @@ function sendMumbaiTelegramMessage() {
     .catch(function(err) {
       console.log(err);
     });
+
+  api
+    .sendMessage({
+      chat_id: process.env.CHATID1,
+      text: "Avengers Theatres list updated !"
+    })
+    .then(function(data) {
+      console.log(util.inspect(data, false, null));
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
 }
 
 async function doHyderabadStuff() {
@@ -159,13 +171,14 @@ async function doMumbaiStuff() {
   console.log("Doing Mumbai...");
   clearInterval(timer);
   setInterval(async () => {
-    console.log("Making the request Mumbai " + count++);
+    // console.log("Making the request Mumbai " + count++);
     try {
       await request(
         "https://in.bookmyshow.com/buytickets/avengers-endgame-mumbai/movie-mumbai-ET00100668-MT/20190502",
         (error, response, html) => {
           if (response) {
             if (!error & (response.statusCode == 200)) {
+              console.log("--- URL HIT --- " + count++);
               var $ = cheerio.load(html);
               if ($("#venuelist").children(".list").length > mumbai) {
                 mumbai++;
@@ -185,7 +198,7 @@ async function doMumbaiStuff() {
 
 http.createServer().listen(3000, () => {
   console.log("Server at PORT 3000 started.");
-  doBangaloreStuff();
-  doHyderabadStuff();
+  // doBangaloreStuff();
+  // doHyderabadStuff();
   doMumbaiStuff();
 });
