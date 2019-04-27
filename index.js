@@ -16,7 +16,7 @@ let timer = 1000;
 
 let bangalore = 3;
 let hyderabad = 3;
-let mumbai = 3;
+let mumbai = 2;
 let count = 1;
 
 // Handle Bangalore Requests
