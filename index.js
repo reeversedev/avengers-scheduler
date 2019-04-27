@@ -196,7 +196,7 @@ async function doMumbaiStuff() {
   return true;
 }
 
-http.createServer().listen(3000, () => {
+http.createServer().listen(process.env.PORT || 3000, () => {
   console.log("Server at PORT 3000 started.");
   // doBangaloreStuff();
   // doHyderabadStuff();
